@@ -17,14 +17,11 @@ export default function ThankYouPage() {
         }
       })
       .catch((error) => console.error('Error fetching session:', error));
-
-    // Auto-logout and redirect after 3 seconds
-    const timer = setTimeout(() => {
-      window.location.href = '/api/logout';
-    }, 3000);
-
-    return () => clearTimeout(timer);
   }, [router]);
+
+  const handleScanMore = () => {
+    window.location.href = '/api/logout';
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#667eea] to-[#764ba2] p-8">
@@ -71,18 +68,24 @@ export default function ThankYouPage() {
           </ul>
         </div>
 
-        <p className="text-[#374151] font-medium">
-          Please check your email inbox for your personalized report.
-        </p>
-
-        <div className="text-[0.9rem] text-[#9ca3af] mt-8">
-          Logging you out and redirecting
-          <span className="inline-block ml-2">
-            <span className="animate-blink-1">.</span>
-            <span className="animate-blink-2">.</span>
-            <span className="animate-blink-3">.</span>
-          </span>
+        <div className="bg-[#fef3c7] border-l-4 border-[#f59e0b] rounded-lg p-4 my-6 text-left">
+          <p className="text-[#92400e] text-[0.95rem] font-medium mb-2">
+            📧 <strong>Email Delivery:</strong>
+          </p>
+          <p className="text-[#78350f] text-[0.9rem]">
+            You will receive your personalized report via email within <strong>24-48 hours</strong>.
+          </p>
+          <p className="text-[#78350f] text-[0.9rem] mt-2">
+            ⚠️ <strong>Important:</strong> Please check your spam/junk folder if you don't see the email in your inbox.
+          </p>
         </div>
+
+        <button
+          onClick={handleScanMore}
+          className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold py-3 px-6 rounded-xl text-lg hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        >
+          Scan More
+        </button>
       </div>
     </div>
   );

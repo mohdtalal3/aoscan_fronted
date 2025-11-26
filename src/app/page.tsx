@@ -152,6 +152,15 @@ export default function HomePage() {
             console.error('Backend submission error:', error);
           });
 
+          // Clear session to prevent re-submission
+          try {
+            await fetch('/api/clear-session', {
+              method: 'POST',
+            });
+          } catch (error) {
+            console.error('Error clearing session:', error);
+          }
+
           // Small delay to ensure fetch is initiated before redirect
           setTimeout(() => {
             router.push('/thank-you');
