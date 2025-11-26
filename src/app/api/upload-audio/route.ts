@@ -47,11 +47,18 @@ export async function POST(request: NextRequest) {
 
         // Save audio file
         await writeFile(filepath, audioBytes);
+        
+        console.log(`✅ Audio file saved: ${filepath} (${audioBytes.length} bytes)`);
+        
+        // Small delay to ensure file is completely written to disk
+        await new Promise(resolve => setTimeout(resolve, 100));
 
         // Generate URL for the audio file
         // Use API route to serve the file since static files aren't accessible after build
         const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || request.nextUrl.origin;
         const audioUrl = `${frontendUrl}/api/serve-audio/${filename}`;
+        
+        console.log(`📤 Audio URL generated: ${audioUrl}`);
 
         return NextResponse.json({
             success: true,

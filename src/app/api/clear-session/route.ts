@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { clearSession } from '@/lib/session';
+import { cookies } from 'next/headers';
+import { getIronSession } from 'iron-session';
+import { SessionData, sessionOptions } from '@/lib/session';
 
 export async function POST(request: NextRequest) {
     try {
-        // Clear the session after form submission
-        await clearSession();
+        // Get the session and destroy it
+        const cookieStore = await cookies();
+        const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
+        
+        // Clear session data
+        session.destroy();
         
         return NextResponse.json({
             success: true,
