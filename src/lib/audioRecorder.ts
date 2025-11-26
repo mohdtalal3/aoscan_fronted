@@ -37,7 +37,7 @@ export class AudioRecorder {
         };
 
         // Fallback for browsers that don't support the preferred mime type
-        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        if (options.mimeType && !MediaRecorder.isTypeSupported(options.mimeType)) {
             options.mimeType = 'audio/webm';
         }
 
