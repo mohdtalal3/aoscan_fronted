@@ -49,7 +49,9 @@ export async function POST(request: NextRequest) {
         await writeFile(filepath, audioBytes);
 
         // Generate URL for the audio file
-        const audioUrl = `${request.nextUrl.origin}/uploads/${filename}`;
+        // Use NEXT_PUBLIC_FRONTEND_URL if available, otherwise fall back to request origin
+        const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || request.nextUrl.origin;
+        const audioUrl = `${frontendUrl}/uploads/${filename}`;
 
         return NextResponse.json({
             success: true,
